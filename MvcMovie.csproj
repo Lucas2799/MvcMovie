@@ -6,4 +6,83 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Content Remove="wwwroot\Theme\.browserslistrc" />
+    <Content Remove="wwwroot\Theme\.gitignore" />
+    <Content Remove="wwwroot\Theme\.travis.yml" />
+    <Content Remove="wwwroot\Theme\404.html" />
+    <Content Remove="wwwroot\Theme\blank.html" />
+    <Content Remove="wwwroot\Theme\buttons.html" />
+    <Content Remove="wwwroot\Theme\cards.html" />
+    <Content Remove="wwwroot\Theme\charts.html" />
+    <Content Remove="wwwroot\Theme\forgot-password.html" />
+    <Content Remove="wwwroot\Theme\gulpfile.js" />
+    <Content Remove="wwwroot\Theme\index.html" />
+    <Content Remove="wwwroot\Theme\LICENSE" />
+    <Content Remove="wwwroot\Theme\login.html" />
+    <Content Remove="wwwroot\Theme\PRO_UPGRADE.txt" />
+    <Content Remove="wwwroot\Theme\README.md" />
+    <Content Remove="wwwroot\Theme\register.html" />
+    <Content Remove="wwwroot\Theme\tables.html" />
+    <Content Remove="wwwroot\Theme\utilities-animation.html" />
+    <Content Remove="wwwroot\Theme\utilities-border.html" />
+    <Content Remove="wwwroot\Theme\utilities-color.html" />
+    <Content Remove="wwwroot\Theme\utilities-other.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\Theme\.browserslistrc" />
+    <_ContentIncludedByDefault Remove="wwwroot\Theme\.gitignore" />
+    <_ContentIncludedByDefault Remove="wwwroot\Theme\.travis.yml" />
+    <_ContentIncludedByDefault Remove="wwwroot\Theme\404.html" />
+    <_ContentIncludedByDefault Remove="wwwroot\Theme\blank.html" />
+    <_ContentIncludedByDefault Remove="wwwroot\Theme\charts.html" />
+    <_ContentIncludedByDefault Remove="wwwroot\Theme\forgot-password.html" />
+    <_ContentIncludedByDefault Remove="wwwroot\Theme\gulpfile.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\Theme\index.html" />
+    <_ContentIncludedByDefault Remove="wwwroot\Theme\LICENSE" />
+    <_ContentIncludedByDefault Remove="wwwroot\Theme\package-lock.json" />
+    <_ContentIncludedByDefault Remove="wwwroot\Theme\package.json" />
+    <_ContentIncludedByDefault Remove="wwwroot\Theme\PRO_UPGRADE.txt" />
+    <_ContentIncludedByDefault Remove="wwwroot\Theme\README.md" />
+    <_ContentIncludedByDefault Remove="wwwroot\Theme\tables.html" />
+    <_ContentIncludedByDefault Remove="wwwroot\Theme\utilities-animation.html" />
+    <_ContentIncludedByDefault Remove="wwwroot\Theme\utilities-border.html" />
+    <_ContentIncludedByDefault Remove="wwwroot\Theme\utilities-color.html" />
+    <_ContentIncludedByDefault Remove="wwwroot\Theme\utilities-other.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Theme\.browserslistrc" />
+    <None Include="wwwroot\Theme\.gitignore" />
+    <None Include="wwwroot\Theme\.travis.yml" />
+    <None Include="wwwroot\Theme\404.html" />
+    <None Include="wwwroot\Theme\blank.html" />
+    <None Include="wwwroot\Theme\buttons.html" />
+    <None Include="wwwroot\Theme\cards.html" />
+    <None Include="wwwroot\Theme\charts.html" />
+    <None Include="wwwroot\Theme\forgot-password.html" />
+    <None Include="wwwroot\Theme\gulpfile.js" />
+    <None Include="wwwroot\Theme\index.html" />
+    <None Include="wwwroot\Theme\LICENSE" />
+    <None Include="wwwroot\Theme\login.html" />
+    <None Include="wwwroot\Theme\PRO_UPGRADE.txt" />
+    <None Include="wwwroot\Theme\README.md" />
+    <None Include="wwwroot\Theme\register.html" />
+    <None Include="wwwroot\Theme\tables.html" />
+    <None Include="wwwroot\Theme\utilities-animation.html" />
+    <None Include="wwwroot\Theme\utilities-border.html" />
+    <None Include="wwwroot\Theme\utilities-color.html" />
+    <None Include="wwwroot\Theme\utilities-other.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\Theme\package-lock.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Theme\package.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>
