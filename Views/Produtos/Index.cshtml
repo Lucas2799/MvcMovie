@@ -3,29 +3,30 @@
 @{
     ViewData["Title"] = "Display Produtos";
 }
-
+<div class="container-fluid">
 <h1>Produtos</h1>
 
 <div class="card shadow mb-4" >
-
     <div class="card-header py-3" style='text-align:right'>
         <h6 class="m-1 font-weight-bold text-primary">
-           
                 <a asp-action="Create" style="align-items"><i class="fa-solid fa-plus"> </i>  Adicionar</a>
-            </p>
          </h6>
     </div>
- <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+     
+    <div class="card shadow mb-4">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
         <thead>
             <tr>
                 <th>
                     @Html.DisplayNameFor(model => model.Name)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Ativo)
+                     @Html.DisplayNameFor(model => model.Valor)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Valor)
+                    @Html.DisplayNameFor(model => model.Ativo)
                 </th>
                 <th>Ações</th>
             </tr>
@@ -37,10 +38,10 @@
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Ativo)
+                    @Html.DisplayFor(modelItem => item.Valor)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Valor)
+                    @Html.DisplayFor(modelItem => item.Ativo)
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa-solid fa-pen-to-square"></i></a> |
@@ -52,3 +53,8 @@
         </tbody>
     </table>
     </div>
+    </div>
+    </div>
+    </div>
+    </div>
+   
