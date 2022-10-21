@@ -1,184 +1,115 @@
-/*! DataTables Bootstrap 4 integration
- * ©2011-2017 SpryMedia Ltd - datatables.net/license
- */
+function IsPaginationEmpty() {
+	let paginationEmpty = document.querySelector('.dt-pagination > ul:empty')
 
-/**
- * DataTables integration for Bootstrap 4. This requires Bootstrap 4 and
- * DataTables 1.10 or newer.
- *
- * This file sets the defaults and adds options to DataTables to style its
- * controls using Bootstrap. See http://datatables.net/manual/styling/bootstrap
- * for further information.
- */
-(function( factory ){
-	if ( typeof define === 'function' && define.amd ) {
-		// AMD
-		define( ['jquery', 'datatables.net'], function ( $ ) {
-			return factory( $, window, document );
-		} );
-	}
-	else if ( typeof exports === 'object' ) {
-		// CommonJS
-		module.exports = function (root, $) {
-			if ( ! root ) {
-				root = window;
-			}
+	if (!!paginationEmpty)
+		paginationEmpty.parentElement.style.display = "none"
+	else
+		document.querySelector('.dt-pagination').style.display = "block"
+}
 
-			if ( ! $ || ! $.fn.dataTable ) {
-				// Require DataTables, which attaches to jQuery, including
-				// jQuery if needed and have a $ property so we can access the
-				// jQuery object that is used
-				$ = require('datatables.net')(root, $).$;
-			}
+function GetActiveRow(row) {
+	let style = row.ativo ? "bg-success" : "bg-danger"
+	let value = row.ativo ? "Sim" : "Não"
+	return `<span class='badge ${style} badge-ativo'>${value}</span>`;
+}
 
-			return factory( $, root, root.document );
-		};
-	}
-	else {
-		// Browser
-		factory( jQuery, window, document );
-	}
-}(function( $, window, document, undefined ) {
-'use strict';
-var DataTable = $.fn.dataTable;
+function CheckFilterActive(fields) {
 
+	let arrayFields = Array.prototype.slice.call(arguments);
 
-/* Set the defaults for DataTables initialisation */
-$.extend( true, DataTable.defaults, {
-	dom:
-		"<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
-		"<'row'<'col-sm-12'tr>>" +
-		"<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
-	renderer: 'bootstrap'
-} );
+	let isFilterActive = !arrayFields.every((value, index, array) => $(value).val() === "")
 
+	let badge = $('.badge-filter')
+	if (isFilterActive)
+		badge.removeClass('visually-hidden')
+	else
+		badge.addClass('visually-hidden')
+}
 
-/* Default class modification */
-$.extend( DataTable.ext.classes, {
-	sWrapper:      "dataTables_wrapper dt-bootstrap4",
-	sFilterInput:  "form-control form-control-sm",
-	sLengthSelect: "custom-select custom-select-sm form-control form-control-sm",
-	sProcessing:   "dataTables_processing card",
-	sPageButton:   "paginate_button page-item"
-} );
+function InitDatatable() {
+	const element = document.getElementById('datatablesSimple');
+	if (element)
+		return new DataTable(element, {
+			searching: false,
+			language: {
+				emptyTable: "Nenhum registro encontrado",
+				info: "Exibindo _START_ a _END_ de _TOTAL_ itens",
+				infoEmpty: "Exibindo 0 a 0 de 0 itens",
+				infoFiltered: "(Filtrados de _MAX_ itens)",
+				loadingRecords: "Carregando...",
+				processing: "Processando...",
+				zeroRecords: "Nenhum Registro encontrado",
+				lengthMenu: "_MENU_ Resultados por página",
+				paginate: {
+					next: "Próximo",
+					previous: "Anterior",
+					first: "Primeiro",
+					last: "Último"
+				},
+			},
+			dom: 'rt<"dataTable-bottom"lip>',
+			searchable: false,
+			orderMulti: false,
+			retrieve: true,
+			stateSave: true,
+			stateSaveParams: function (settings, data) {
+				data.filter = window.datatable.filter
+				data.collapsedFilter = window.datatable.collapsedFilter
+			},
+			stateLoadParams: function (settings, data) {
+				window.datatable.filter = data.filter
+				window.datatable.collapsedFilter = data.collapsedFilter
 
-
-/* Bootstrap paging button renderer */
-DataTable.ext.renderer.pageButton.bootstrap = function ( settings, host, idx, buttons, page, pages ) {
-	var api     = new DataTable.Api( settings );
-	var classes = settings.oClasses;
-	var lang    = settings.oLanguage.oPaginate;
-	var aria = settings.oLanguage.oAria.paginate || {};
-	var btnDisplay, btnClass, counter=0;
-
-	var attach = function( container, buttons ) {
-		var i, ien, node, button;
-		var clickHandler = function ( e ) {
-			e.preventDefault();
-			if ( !$(e.currentTarget).hasClass('disabled') && api.page() != e.data.action ) {
-				api.page( e.data.action ).draw( 'page' );
-			}
-		};
-
-		for ( i=0, ien=buttons.length ; i<ien ; i++ ) {
-			button = buttons[i];
-
-			if ( Array.isArray( button ) ) {
-				attach( container, button );
-			}
-			else {
-				btnDisplay = '';
-				btnClass = '';
-
-				switch ( button ) {
-					case 'ellipsis':
-						btnDisplay = '&#x2026;';
-						btnClass = 'disabled';
-						break;
-
-					case 'first':
-						btnDisplay = lang.sFirst;
-						btnClass = button + (page > 0 ?
-							'' : ' disabled');
-						break;
-
-					case 'previous':
-						btnDisplay = lang.sPrevious;
-						btnClass = button + (page > 0 ?
-							'' : ' disabled');
-						break;
-
-					case 'next':
-						btnDisplay = lang.sNext;
-						btnClass = button + (page < pages-1 ?
-							'' : ' disabled');
-						break;
-
-					case 'last':
-						btnDisplay = lang.sLast;
-						btnClass = button + (page < pages-1 ?
-							'' : ' disabled');
-						break;
-
-					default:
-						btnDisplay = button + 1;
-						btnClass = page === button ?
-							'active' : '';
-						break;
+				if (data.collapsedFilter)
+					$('#collapseFilter').collapse('hide')
+				else
+					$('#collapseFilter').collapse('show')
+			},
+			serverSide: true,
+			processing: true,
+			ajax: {
+				url: `${window.location.pathname}?handler=LoadData`,
+				type: 'POST',
+				headers: {
+					RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+				},
+				data: (data) => {
+					data.Filter = window.datatable.filter
 				}
+			},
+			columnDefs: window.datatable.columnDefs.concat(
+				[
+					{ responsivePriority: 1, targets: 0 },
+					{ responsivePriority: 2, targets: -2 },
+					{ responsivePriority: 3, targets: -1 }
+				]
+			)
+		}).on('draw', function () {
+			$('[data-toggle="tooltip"]').tooltip();
+		});
+	else
+		return
+}
 
-				if ( btnDisplay ) {
-					node = $('<li>', {
-							'class': classes.sPageButton+' '+btnClass,
-							'id': idx === 0 && typeof button === 'string' ?
-								settings.sTableId +'_'+ button :
-								null
-						} )
-						.append( $('<a>', {
-								'href': '#',
-								'aria-controls': settings.sTableId,
-								'aria-label': aria[ button ],
-								'data-dt-idx': counter,
-								'tabindex': settings.iTabIndex,
-								'class': 'page-link'
-							} )
-							.html( btnDisplay )
-						)
-						.appendTo( container );
+window.addEventListener('DOMContentLoaded', event => {
+	// DataTables
+	// https://datatables.net/manual/
 
-					settings.oApi._fnBindAction(
-						node, {action: button}, clickHandler
-					);
+	/*IsPaginationEmpty()*/
 
-					counter++;
-				}
-			}
-		}
-	};
+	if (window.datatable === undefined)
+		window.datatable = {}
 
-	// IE9 throws an 'unknown error' if document.activeElement is used
-	// inside an iframe or frame. 
-	var activeEl;
+	$('#menu-bar a.nav-link[href^="/"').click(() => {
+		InitDatatable().state.clear()
+	})
 
-	try {
-		// Because this approach is destroying and recreating the paging
-		// elements, focus is lost on the select button which is bad for
-		// accessibility. So we want to restore focus once the draw has
-		// completed
-		activeEl = $(host).find(document.activeElement).data('dt-idx');
-	}
-	catch (e) {}
-
-	attach(
-		$(host).empty().html('<ul class="pagination"/>').children('ul'),
-		buttons
-	);
-
-	if ( activeEl !== undefined ) {
-		$(host).find( '[data-dt-idx='+activeEl+']' ).trigger('focus');
-	}
-};
-
-
-return DataTable;
-}));
+	$('#collapseFilter')
+		.on('show.bs.collapse hide.bs.collapse', function (e) {
+			if (e.type === 'hide')
+				window.datatable.collapsedFilter = true
+			else
+				window.datatable.collapsedFilter = false
+			InitDatatable().state.save()
+		})
+})
