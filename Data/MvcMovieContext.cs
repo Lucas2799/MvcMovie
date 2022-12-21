@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using MvcMovie.Models.Categoria;
 using MvcMovie.Models.Produtos;
+using MvcMovie.Models.Clientes;
 
 namespace MvcMovie.Data
 {
@@ -15,8 +16,10 @@ namespace MvcMovie.Data
         {
         }
 
-        public DbSet<MvcMovie.Models.Categoria.Categoria>? Categoria { get; set; }
+        public DbSet<Categoria>? Categoria { get; set; }
 
-        public DbSet<MvcMovie.Models.Produtos.Produtos>? Produtos { get; set; }
+        public DbSet<Produtos>? Produtos { get; set; }
+
+        public DbSet<Clientes>? Clientes { get; set; }
     }
 }
